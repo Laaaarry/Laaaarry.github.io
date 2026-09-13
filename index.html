@@ -18,7 +18,7 @@
     --blue:   #1b3a5c;
     --green:  #1c4a3b;
     --text:   66ch;
-    --wide:   1080px;
+    --wide:   1140px;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -29,8 +29,10 @@
     color: var(--ink);
     font: 400 17px/1.6 "IBM Plex Sans", system-ui, sans-serif;
   }
-  .col  { max-width: var(--text); margin-inline: auto; }
   .full { max-width: var(--wide); margin-inline: auto; }
+  .col  { max-width: var(--text); margin-inline: auto; }
+  header.col, .board > .col { max-width: var(--wide); }
+  header.col > *, .board > .col > * { max-width: var(--text); }
 
   h1 {
     font-size: clamp(2rem, 6vw, 2.75rem);
@@ -60,8 +62,9 @@
 
   .board { display: none; }
   .board[data-active] { display: block; }
-  .board h2 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 .75rem; }
-  .board > .col > p { margin: 0 0 1.5rem; color: var(--muted); }
+  .board h2 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 .35rem; }
+  .repo { margin: 0 0 1.1rem; font-size: .94rem; }
+  .desc { margin: 0 0 1.75rem; color: var(--muted); }
 
   /* Board facts as a hairline-ruled list: the numbers are the content. */
   dl { margin: 0 0 1.75rem; border-top: 1px solid var(--rule); }
@@ -75,8 +78,11 @@
   dd { margin: 0; }
 
   .viewer { background: var(--wash); border: 1px solid var(--rule); }
-  .altium-ecad-viewer { height: 640px; max-width: 100%; }
-  @media (max-width: 640px) { .altium-ecad-viewer { height: 440px; } }
+  /* The embed script builds its UI around this div and reads the inline
+     height, so the height lives on the element, not here. */
+  .altium-ecad-viewer { max-width: 100%; }
+  /* Fallback link, shown only if the script never loads. */
+  .altium-ecad-viewer > a { display: none; }
 
   footer {
     max-width: var(--wide); margin: 4rem auto 0; padding-top: 1.25rem;
@@ -105,7 +111,7 @@
     <div class="col">
       <h2>STM32L496RG breakout</h2>
       <p class="repo"><a href="https://github.com/Laaaarry/STM32L496RG_Breakout">Bring-up notes and scope captures on GitHub</a></p>
-      <p>An STM32L496RG breakout board, with buffered I²C bus, CAN through a protected transceiver, and SWD with SWO trace. Timer/PWM, NRST,
+      <p class="desc">An STM32L496RG breakout board, with buffered I²C bus, CAN through a protected transceiver, and SWD with SWO trace. Timer/PWM, NRST,
         and SPI pins are also broken out to a 7-pin header. Verified on the scope after assembly.</p>
       <dl>
         <div class="fact"><dt>Stackup</dt><dd>4 layer, two internal ground planes</dd></div>
@@ -115,6 +121,7 @@
     </div>
     <div class="viewer">
       <div class="altium-ecad-viewer"
+           style="height: 780px; max-width: 100%; box-sizing: border-box;"
            data-project-src="https://laaaarry.github.io/designs/STM32L496-breakout.zip"
            data-active-view="sch"
            data-project-outputs="Gerber,Pdf,Step">
@@ -127,7 +134,7 @@
     <div class="col">
       <h2>Onboard computer</h2>
       <p class="repo"><a href="https://github.com/Laaaarry/Onboard-Computer-PCB">LED Blink and more details on GitHub</a></p>
-      <p>An STM32F103-based onboard computer, containing power circuitry, JTAG header, and a buffered I²C
+      <p class="desc">An STM32F103-based onboard computer, containing power circuitry, JTAG header, and a buffered I²C
       bus. First board I took from schematic through to a working blink.</p>
       <dl>
         <div class="fact"><dt>Stackup</dt><dd>2 layer</dd></div>
@@ -137,6 +144,7 @@
     </div>
     <div class="viewer">
       <div class="altium-ecad-viewer"
+           style="height: 780px; max-width: 100%; box-sizing: border-box;"
            data-project-src="https://laaaarry.github.io/designs/Fish-and-Microchips.zip"
            data-active-view="sch"
            data-project-outputs="Gerber,Pdf">
@@ -149,17 +157,16 @@
     <div class="col">
       <h2>3V3 buck converter</h2>
       <p class="repo"><a href="https://github.com/Laaaarry/3V3-Buck-Converter-PCB">Design and ripple measurement on GitHub</a></p>
-      <p>A 3V3 buck around an LMR50410, designed to hold output ripple under 100 mV.</p>
+      <p class="desc">A 3V3 buck around an LMR50410, designed to hold output ripple under 100 mV.</p>
       <dl>
         <div class="fact"><dt>Stackup</dt><dd>2 layer</dd></div>
         <div class="fact"><dt>Components</dt><dd>9</dd></div>
         <div class="fact"><dt>Output</dt><dd>3.3 V, ripple around 36 mV Pk-Pk</dd></div>
-        <div class="fact"><dt>Repository</dt>
-          <dd><a href="https://github.com/Laaaarry/3V3-Buck-Converter-PCB">Ripple measurement</a></dd></div>
       </dl>
     </div>
     <div class="viewer">
       <div class="altium-ecad-viewer"
+           style="height: 780px; max-width: 100%; box-sizing: border-box;"
            data-project-src="https://laaaarry.github.io/designs/Buck-3V3.zip"
            data-active-view="sch"
            data-project-outputs="Gerber,Pdf">
