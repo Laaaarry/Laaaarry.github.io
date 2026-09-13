@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PCB Projects — Lawrence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://viewer.altium.com/client/static/js/embed.js"></script>
+<style>
+  :root {
+    --paper:  #ffffff;
+    --wash:   #f4f5f6;
+    --rule:   #d9dcdf;
+    --ink:    #17191c;
+    --muted:  #5e646b;
+    --blue:   #1b3a5c;
+    --green:  #1c4a3b;
+    --text:   66ch;
+    --wide:   1080px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    padding: 4.5rem 1.5rem 6rem;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 17px/1.6 "IBM Plex Sans", system-ui, sans-serif;
+  }
+  .col  { max-width: var(--text); margin-inline: auto; }
+  .full { max-width: var(--wide); margin-inline: auto; }
+
+  h1 {
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin: 0 0 .5rem;
+  }
+  .sub { margin: 0 0 3rem; color: var(--muted); }
+  a { color: var(--blue); text-underline-offset: 3px; }
+
+  /* Tabs: text with a rule beneath, not pills. The rule doubles as the
+     section divider, so the device carries structure rather than decoration. */
+  nav {
+    display: flex; flex-wrap: wrap; gap: 1.75rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 2.25rem;
+  }
+  nav button {
+    font: inherit; font-weight: 500; color: var(--muted);
+    background: none; border: 0; cursor: pointer;
+    padding: 0 0 .7rem; margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+  }
+  nav button:hover { color: var(--ink); }
+  nav button[aria-current="true"] { color: var(--ink); border-bottom-color: var(--green); }
+  nav button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+  .board { display: none; }
+  .board[data-active] { display: block; }
+  .board h2 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 .75rem; }
+  .board > .col > p { margin: 0 0 1.5rem; color: var(--muted); }
+
+  /* Board facts as a hairline-ruled list: the numbers are the content. */
+  dl { margin: 0 0 1.75rem; border-top: 1px solid var(--rule); }
+  div.fact {
+    display: flex; gap: 1.5rem;
+    padding: .5rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: .94rem;
+  }
+  dt { flex: 0 0 8.5rem; color: var(--muted); margin: 0; }
+  dd { margin: 0; }
+
+  .viewer { background: var(--wash); border: 1px solid var(--rule); }
+  .altium-ecad-viewer { height: 640px; max-width: 100%; }
+  @media (max-width: 640px) { .altium-ecad-viewer { height: 440px; } }
+
+  footer {
+    max-width: var(--wide); margin: 4rem auto 0; padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    font-size: .88rem; color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<header class="col">
+  <h1>Lawrence's PCB Projects</h1>
+  <p class="sub">Three PCB boards I designed in Altium, had fabricated, and brought up on the
+  bench as part of UTAT Space Systems. Open the schematic, layout, 3D model, and BOM below.
+  Visualization is done through Altium Viewer so there's nothing to install. Sources
+  are on my <a href="https://github.com/Laaaarry">GitHub</a>.</p>
+</header>
+
+<nav id="tabs" class="full">
+  <button data-target="stm32" aria-current="true">STM32L496RG breakout</button>
+  <button data-target="obc">Onboard computer</button>
+  <button data-target="buck">3V3 buck converter</button>
+</nav>
+
+<main class="full">
+  <section class="board" id="stm32" data-active>
+    <div class="col">
+      <h2>STM32L496RG breakout</h2>
+      <p class="repo"><a href="https://github.com/Laaaarry/STM32L496RG_Breakout">Bring-up notes and scope captures on GitHub</a></p>
+      <p>An STM32L496RG breakout board, with buffered I²C bus, CAN through a protected transceiver, and SWD with SWO trace. Timer/PWM, NRST,
+        and SPI pins are also broken out to a 7-pin header. Verified on the scope after assembly.</p>
+      <dl>
+        <div class="fact"><dt>Stackup</dt><dd>4 layer, two internal ground planes</dd></div>
+        <div class="fact"><dt>Components</dt><dd>57</dd></div>
+        <div class="fact"><dt>Fabrication</dt><dd>JLCPCB, hand assembled</dd></div>
+      </dl>
+    </div>
+    <div class="viewer">
+      <div class="altium-ecad-viewer"
+           data-project-src="designs/STM32L496-breakout.zip"
+           data-active-view="sch"
+           data-project-outputs="Gerber,Pdf,Step">
+        <a href="https://www.altium365.com/viewer/">PCB File Viewer by Altium</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="board" id="obc">
+    <div class="col">
+      <h2>Onboard computer</h2>
+      <p class="repo"><a href="https://github.com/Laaaarry/Onboard-Computer-PCB">LED Blink and more details on GitHub</a></p>
+      <p>An STM32F103-based onboard computer, containing power circuitry, JTAG header, and a buffered I²C
+      bus. First board I took from schematic through to a working blink.</p>
+      <dl>
+        <div class="fact"><dt>Stackup</dt><dd>2 layer</dd></div>
+        <div class="fact"><dt>Components</dt><dd>32</dd></div>
+        <div class="fact"><dt>Fabrication</dt><dd>JLCPCB, hand assembled</dd></div>
+      </dl>
+    </div>
+    <div class="viewer">
+      <div class="altium-ecad-viewer"
+           data-project-src="designs/Fish-and-Microchips.zip"
+           data-active-view="sch"
+           data-project-outputs="Gerber,Pdf">
+        <a href="https://www.altium365.com/viewer/">PCB File Viewer by Altium</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="board" id="buck">
+    <div class="col">
+      <h2>3V3 buck converter</h2>
+      <p class="repo"><a href="https://github.com/Laaaarry/3V3-Buck-Converter-PCB">Design and ripple measurement on GitHub</a></p>
+      <p>A 3V3 buck around an LMR50410, designed to hold output ripple under 100 mV.</p>
+      <dl>
+        <div class="fact"><dt>Stackup</dt><dd>2 layer</dd></div>
+        <div class="fact"><dt>Components</dt><dd>9</dd></div>
+        <div class="fact"><dt>Output</dt><dd>3.3 V, ripple around 36 mV Pk-Pk</dd></div>
+        <div class="fact"><dt>Repository</dt>
+          <dd><a href="https://github.com/Laaaarry/3V3-Buck-Converter-PCB">Ripple measurement</a></dd></div>
+      </dl>
+    </div>
+    <div class="viewer">
+      <div class="altium-ecad-viewer"
+           data-project-src="designs/Buck-3V3.zip"
+           data-active-view="sch"
+           data-project-outputs="Gerber,Pdf">
+        <a href="https://www.altium365.com/viewer/">PCB File Viewer by Altium</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>Viewer by Altium 365. Design sources are zipped Altium projects served from this site.</footer>
+
+<script>
+  // Tabs rather than three viewers at once: each spins up its own WebGL context.
+  const tabs = document.querySelectorAll('#tabs button');
+  const show = id => {
+    const target = document.getElementById(id) ? id : 'stm32';
+    tabs.forEach(t => t.setAttribute('aria-current', String(t.dataset.target === target)));
+    document.querySelectorAll('.board').forEach(s =>
+      s.toggleAttribute('data-active', s.id === target));
+  };
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    history.replaceState(null, '', '#' + tab.dataset.target);
+    show(tab.dataset.target);
+  }));
+  show(location.hash.slice(1));
+  addEventListener('hashchange', () => show(location.hash.slice(1)));
+</script>
+</body>
+</html>
